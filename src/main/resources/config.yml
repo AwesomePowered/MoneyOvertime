@@ -1,0 +1,13 @@
+Time: 60
+Deposits:
+  basic:
+    amount: 10
+  intermediate:
+    amount: 20
+    commands:
+      - 'give %player% apple 1'
+  advanced:
+    amount: 30
+    time: 900
+    commands:
+      - 'give %player% apple 2'

@@ -1,0 +1,5 @@
+name: MoneyOvertime
+version: ${project.version}
+main: net.poweredbyawesome.moneyovertime.MoneyOvertime
+depend: [Vault]
+authors: [LaxWasHere]
