@@ -48,8 +48,8 @@ public final class MoneyOvertime extends JavaPlugin implements Listener {
 
 
     public void maekMoneh(Player p, int rtime) {
-        while (!invoice.containsKey(p.getUniqueId())) { //while or if? ¯\_(ツ)_/¯
-            if (hasWildcard(p)) {
+        if (!invoice.containsKey(p.getUniqueId())) {
+            if (hasWildcard(p) || p.hasPermission("money.overtime.nope")) {
                 getLogger().log(Level.INFO, p.getName() + " has a wildcard permission ¯\\_(ツ)_/¯");
                 return;
             }
@@ -70,11 +70,9 @@ public final class MoneyOvertime extends JavaPlugin implements Listener {
         }
     }
 
+    @Deprecated
     public void spendMoneh(Player p) {
-        if (invoice.containsKey(p.getUniqueId())) {
-            Bukkit.getScheduler().cancelTask(invoice.get(p.getUniqueId()));
-            invoice.remove(p.getUniqueId());
-        }
+        removePlayer(p);
     }
 
     public int getBasicTime(Player p) {
@@ -86,6 +84,15 @@ public final class MoneyOvertime extends JavaPlugin implements Listener {
             }
         }
         return time;
+    }
+
+    public boolean removePlayer(Player p) {
+        if (invoice.containsKey(p.getUniqueId())) {
+            Bukkit.getScheduler().cancelTask(invoice.get(p.getUniqueId()));
+            invoice.remove(p.getUniqueId());
+            return true;
+        }
+        return false;
     }
 
 

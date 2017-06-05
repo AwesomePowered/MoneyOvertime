@@ -11,3 +11,4 @@ Deposits:
     time: 900
     commands:
       - 'give %player% apple 2'
+      - 'give %player% stone 1'
