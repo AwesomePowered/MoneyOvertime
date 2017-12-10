@@ -1,6 +1,7 @@
 package net.poweredbyawesome.moneyovertime;
 
 import net.milkbowl.vault.economy.Economy;
+import net.poweredbyawesome.moneyovertime.events.PlayerInvoiceEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,7 +58,11 @@ public final class MoneyOvertime extends JavaPlugin implements Listener {
                 for (String s : getConfig().getConfigurationSection("Deposits").getKeys(false)) {
                     if (p.hasPermission(perms.get(s))) {
                         if (econ != null) {
-                            econ.depositPlayer(p, getConfig().getInt("Deposits."+s+".amount"));
+                            double amount = getConfig().getInt("Deposits."+s+".amount");
+                            PlayerInvoiceEvent playerInvoiceEvent = new PlayerInvoiceEvent(p, amount, s);
+                            Bukkit.getPluginManager().callEvent(playerInvoiceEvent);
+                            amount = playerInvoiceEvent.getAmount();
+                            econ.depositPlayer(p, amount);
                         }
                         if (getConfig().getStringList("Deposits."+s+".commands") != null) {
                             for (String command : getConfig().getStringList("Deposits."+s+".commands")) {
@@ -94,7 +99,6 @@ public final class MoneyOvertime extends JavaPlugin implements Listener {
         }
         return false;
     }
-
 
     public void loadPerms() {
         perms.put("ireallyknowwhatimdoingiswear", new Permission("I.Really.Know.What.Im.Doing.I.Swear", PermissionDefault.FALSE));
