@@ -83,8 +83,8 @@ public final class MoneyOvertime extends JavaPlugin implements Listener {
     public int getBasicTime(Player p) {
         for (String s : getConfig().getConfigurationSection("Deposits").getKeys(false)) {
             if (p.hasPermission("money.overtime."+s)) {
-                if (getConfig().getString("Deposits."+s+"time") != null) {
-                    return getConfig().getInt("Deposits."+s+"time");
+                if (getConfig().getString("Deposits."+s+".time") != null) {
+                    return getConfig().getInt("Deposits."+s+".time");
                 }
             }
         }
